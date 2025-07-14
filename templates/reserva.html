@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Reserva de Laboratório</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e6efea;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .formulario {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            width: 400px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .logo {
+            max-width: 250px;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        .slogan {
+            font-size: 14px;
+            font-style: italic;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+            text-align: left;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .btn {
+            margin-top: 20px;
+            width: 100%;
+            padding: 10px;
+            background-color: #3F7159;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #2e5744;
+        }
+        .mensagem-erro {
+            color: red;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 12px;
+            color: #888;
+        }
+        #salas-container {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="formulario">
+    <img src="{{ url_for('static', filename='logo_ghc_full_hd1.png') }}" alt="Logo GHC" class="logo">
+    <div class="slogan">Pensou em reservas? Pensou em GHC</div>
+
+    <h2>Formulário de Reserva</h2>
+
+    {% with mensagens = get_flashed_messages() %}
+      {% if mensagens %}
+        <div class="mensagem-erro">
+          <ul>
+            {% for msg in mensagens %}
+              <li>{{ msg }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <form method="post">
+        <label for="nome">Nome:</label>
+        <input type="text" name="nome" required>
+
+        <label for="laboratorio">Laboratório:</label>
+        <select name="laboratorio" id="laboratorio" onchange="mostrarSalas()" required>
+            <option value="">Selecione</option>
+            <option value="Informatica">Informática</option>
+            <option value="Quimica">Química</option>
+            <option value="Robotica">Robótica</option>
+        </select>
+
+        <div id="salas-container">
+            <label for="sala">Sala:</label>
+            <select name="sala" id="sala">
+                <option value="">Selecione uma sala</option>
+            </select>
+        </div>
+
+        <label for="data">Data:</label>
+        <input type="date" name="data" required>
+
+        <label for="horario_inicio">Horário de Início:</label>
+        <input type="time" name="horario_inicio" required>
+
+        <label for="horario_fim">Horário de Término:</label>
+        <input type="time" name="horario_fim" required>
+
+        <button type="submit" class="btn">Reservar</button>
+    </form>
+
+    <a href="{{ url_for('menu') }}" class="btn btn-secondary" style="margin-top: 15px;">Voltar ao Menu</a>
+
+
+    <div class="footer">Sistema de Reservas SENAI - 2025</div>
+</div>
+
+<script>
+    const salasPorLaboratorio = {
+        Informatica: ['Informática 01', 'Informática 02', 'Informática 03'],
+        Quimica: ['Química 01', 'Química 02'],
+        Robotica: ['Robótica A', 'Robótica B']
+    };
+
+    function mostrarSalas() {
+        const laboratorio = document.getElementById('laboratorio').value;
+        const salaSelect = document.getElementById('sala');
+        const container = document.getElementById('salas-container');
+
+        salaSelect.innerHTML = '<option value="">Selecione uma sala</option>';
+
+        if (salasPorLaboratorio[laboratorio]) {
+            salasPorLaboratorio[laboratorio].forEach(sala => {
+                const option = document.createElement('option');
+                option.value = sala;
+                option.textContent = sala;
+                salaSelect.appendChild(option);
+            });
+            container.style.display = 'block';
+        } else {
+            container.style.display = 'none';
+        }
+    }
+</script>
+
+</body>
+</html>

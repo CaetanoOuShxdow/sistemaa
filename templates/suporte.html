@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Suporte ao Usuário</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e6efea;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 40px;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+
+        h2 {
+            text-align: center;
+            color: #3F7159;
+            margin-bottom: 20px;
+        }
+
+        p {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .contato {
+            background-color: #f1f1f1;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .btn-voltar {
+            display: block;
+            margin: 20px auto 0;
+            padding: 10px 20px;
+            background-color: #3F7159;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            text-align: center;
+            width: fit-content;
+        }
+
+        .btn-voltar:hover {
+            background-color: #2e5744;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Menu de Suporte ao Usuário</h2>
+        <p>Bem-vindo ao suporte do sistema de reservas.</p>
+        <p>Se você estiver com dúvidas ou problemas, entre em contato com a equipe técnica ou veja as perguntas frequentes abaixo.</p>
+
+        <div class="contato">
+            <strong>Contato da equipe técnica:</strong><br>
+            📧 Email: suporte@senaireservas.com<br>
+            📞 Telefone: (51) 4002-8922<br>
+            🕒 Horário: 08h às 18h, de segunda a sexta.
+        </div>
+
+        {% if logado %}
+            <a href="/menu" class="btn-voltar">← Voltar ao Menu</a>
+        {% else %}
+            <a href="/login" class="btn-voltar">← Voltar ao Login</a>
+        {% endif %}
+    </div>
+</body>
+</html>

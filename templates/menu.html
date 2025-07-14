@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Menu de Reservas</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #e6efea;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #2e5744;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 800px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            max-width: 160px;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 30px;
+            margin-bottom: 30px;
+            color: #2e5744;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            background-color: #2e5744;
+            color: white;
+            padding: 15px 30px;
+            font-size: 16px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            min-width: 200px;
+        }
+
+        .btn:hover {
+            background-color: #1f3d30;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #f9f9f9;
+            color: #333;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+
+        th {
+            background-color: #3F7159;
+            color: white;
+        }
+
+        .footer {
+            margin-top: 40px;
+            font-size: 12px;
+            color: #888;
+        }
+
+        @keyframes fadeIn {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+
+        .logout-btn-fixed {
+            position: fixed;
+            right: 30px;
+            bottom: 30px;
+            background-color: #b22222;
+            color: white;
+            padding: 16px 32px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            z-index: 1000;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .logout-btn-fixed:hover {
+            background-color: #7a1616;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <img src="{{ url_for('static', filename='logo_ghc_full_hd1.png') }}" alt="Logo GHC" class="logo">
+    <h1>Sistema de Reservas GHC - SENAI</h1>
+
+    <div class="btn-group">
+        <a href="/reserva" class="btn">Fazer Reserva</a>
+        <a href="#" class="btn" onclick="mostrarTabela()">Ver Reservas</a>
+        <a href="/suporte" class="btn">Suporte</a>
+    </div>
+
+    <table id="tabela-reservas">
+        <tr>
+            <th>Nome</th>
+            <th>Laboratório</th>
+            <th>Sala</th>
+            <th>Data</th>
+            <th>Início</th>
+            <th>Término</th>
+        </tr>
+        {% for r in reservas %}
+        <tr>
+            <td>{{ r[0] }}</td>
+            <td>{{ r[1] }}</td>
+            <td>{{ r[2] }}</td>
+            <td>{{ r[3] }}</td>
+            <td>{{ r[4] }}</td>
+            <td>{{ r[5] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <div class="footer">
+        &copy; 2025 - SENAI - Todos os direitos reservados
+    </div>
+</div>
+
+<a href="/logout" class="logout-btn-fixed">Logout</a>
+
+<script>
+    function mostrarTabela() {
+        const tabela = document.getElementById("tabela-reservas");
+        if (tabela.style.display === "none" || tabela.style.display === "") {
+            tabela.style.display = "table";
+        } else {
+            tabela.style.display = "none";
+        }
+    }
+</script>
+
+</body>
+</html>

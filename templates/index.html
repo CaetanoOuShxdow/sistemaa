@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Reserva de Laboratório</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='favicon.png') }}">
+
+
+
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: linear-gradient(135deg, #e7f0ea, #d0e4da);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333333;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 6px;
+            color: #555555;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #cccccc;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #3F7159;
+            color: #3F7159;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #083a22;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            color: #999999;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Formulário de Reserva</h2>
+        <form method="post" action="/reserva">
+            <label for="nome">Nome:</label>
+            <input type="text" name="nome" required>
+
+            <label for="laboratorio">Laboratório:</label>
+            <select name="laboratorio" required>
+                <option value="Selecione">Selecione</option>
+                <option value="Informática">Informática</option>
+                <option value="Química">Química</option>
+                <option value="Mecânica">Mecânica</option>
+            </select>
+
+            <label for="data">Data:</label>
+            <input type="date" name="data" required>
+
+            <label for="horario">Horário:</label>
+            <input type="time" name="horario" required>
+
+            <button type="submit">Reservar</button>
+        </form>
+        <div class="footer">
+            Sistema de Reservas SENAI - 2025
+        </div>
+    </div>
+</body>
+</html>
