@@ -143,7 +143,7 @@ def ver_reservas():
 @login_required
 def reserva():
     if request.method == 'POST':
-        nome = session['nome']
+        nome = request.form.get('nome', session['nome'])
         laboratorio = request.form.get('laboratorio', '')
         sala = request.form.get('sala', '')
         data = request.form.get('data', '')

@@ -48,20 +48,25 @@
             border-radius: 5px;
             border: 1px solid #ccc;
         }
-        .btn {
-            margin-top: 20px;
-            width: 100%;
-            padding: 10px;
-            background-color: #3F7159;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .btn:hover {
-            background-color: #2e5744;
-        }
+    .btn {
+    margin-top: 15px;
+    width: 100%;
+    padding: 14px;
+    background-color: #3F7159; 
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+    transition: background 0.3s;
+    text-align: center;
+}
+
+.btn:hover {
+    background-color: #2e5744;
+}
         .mensagem-erro {
             color: red;
             margin-top: 10px;
@@ -129,7 +134,7 @@
         <button type="submit" class="btn">Reservar</button>
     </form>
 
-    <a href="{{ url_for('menu') }}" class="btn btn-secondary" style="margin-top: 15px;">Voltar ao Menu</a>
+    <a href="{{ url_for('menu') }}" class="btn">Voltar ao Menu</a>
 
 
     <div class="footer">Sistema de Reservas SENAI - 2025</div>
