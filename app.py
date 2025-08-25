@@ -6,9 +6,9 @@ from datetime import datetime, timedelta
 from functools import wraps
 
 app = Flask(__name__)
-app.secret_key = 'segredo'
+app.secret_key = 'segredo' 
 
-# Caminho absoluto para o banco de dados
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DB_PATH = os.path.join(BASE_DIR, 'reservas.db')
 
@@ -25,7 +25,7 @@ def criar_tabela():
 
     c.execute('''
         CREATE TABLE IF NOT EXISTS reservas (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id INTEGER PRIMARY KEY AUTOINCREMENT, 
             nome TEXT NOT NULL,
             laboratorio TEXT NOT NULL,
             sala TEXT NOT NULL,
@@ -128,18 +128,16 @@ def menu():
 
 
 @app.route('/ver_reservas')
-@login_required
 def ver_reservas():
     with get_db_connection() as conn:
         c = conn.cursor()
         c.execute('''
             SELECT nome, laboratorio, sala, data, horario_inicio, horario_fim
             FROM reservas
-            WHERE usuario_id = ?
             ORDER BY data, horario_inicio
-        ''', (session['usuario_id'],))
+        ''')
         reservas = c.fetchall()
-    return render_template('ver_reservas.html', reservas=reservas)
+    return render_template('ver_reserva.html', reservas=reservas)
 
 @app.route('/reserva', methods=['GET', 'POST'])
 @login_required
@@ -177,7 +175,6 @@ def reserva():
         with get_db_connection() as conn:
             c = conn.cursor()
 
-            # Verifica limite mensal de 3 reservas
             c.execute('''
                 SELECT COUNT(*) FROM reservas
                 WHERE usuario_id = ? AND strftime('%Y-%m', data) = ?
@@ -187,7 +184,6 @@ def reserva():
                 flash("Você já fez 3 reservas neste mês.")
                 return render_template('reserva.html')
 
-            # Verifica conflitos de horário
             c.execute('''
                 SELECT * FROM reservas
                 WHERE laboratorio = ? AND sala = ? AND data = ?
@@ -201,7 +197,6 @@ def reserva():
                     flash("Conflito com outra reserva.")
                     return render_template('reserva.html')
 
-            # Insere reserva com o usuário logado
             c.execute('''
                 INSERT INTO reservas (nome, laboratorio, sala, data, horario_inicio, horario_fim, usuario_id)
                 VALUES (?, ?, ?, ?, ?, ?, ?)
@@ -218,6 +213,15 @@ def suporte():
     logado = 'usuario_id' in session
     return render_template('suporte.html', logado=logado)
 
+
+@app.route('/limpar_banco')
+def limpar_banco():
+    with get_db_connection() as conn:
+        c = conn.cursor()
+        c.execute('DELETE FROM reservas')
+        c.execute('DELETE FROM usuarios')
+        conn.commit()
+    return 'Banco de dados limpo com sucesso!'
 
 
 if __name__ == '__main__':
